@@ -27,23 +27,29 @@ class json_item():
     def __init__(self, content):
         self.action = content['action_text'].encode('utf-8')
         verb = content['verb']
-        if verb == 'QUESTION_FOLLOW':  # 关注问题
+        if verb == 'QUESTION_FOLLOW':  # 关注了问题
             self.title = content['target']['title'].encode('utf-8')
             self.contentless = ''
-        elif verb == 'ANSWER_VOTE_UP':  # 点赞
+        elif verb == 'ANSWER_VOTE_UP':  # 赞同了回答
             self.title = content['target']['question']['title'].encode('utf-8')
             self.contentless = content['target']['excerpt'].encode('utf-8')
         elif verb == 'TOPIC_FOLLOW':  # 关注话题
             self.title = content['target']['name'].encode('utf-8')
             self.contentless = ''
-        elif verb == 'MEMBER_COLLECT_ARTICLE':  # 收藏文章
+        elif verb == 'MEMBER_FOLLOW_COLUMN':  # 关注了专栏
+            self.title = content['target']['title'].encode('utf-8')
+            self.contentless = content['target']['description'].encode('utf-8')
+        elif verb == 'MEMBER_COLLECT_ARTICLE':  # 收藏了文章
             self.title = content['target']['title'].encode('utf-8')
             self.contentless = content['target']['excerpt'].encode('utf-8')
-        elif verb == 'ANSWER_CREATE':  # 回答问题
+        elif verb == 'ANSWER_CREATE':  # 回答了问题
             self.title = content['target']['question']['title'].encode('utf-8')
             self.contentless = content['target']['excerpt'].encode('utf-8')
-        elif verb == 'MEMBER_VOTEUP_ARTICLE':  # 点赞文章
+        elif verb == 'MEMBER_VOTEUP_ARTICLE':  # 赞了文章
             self.title = content['target']['title'].encode('utf-8')
+            self.contentless = content['target']['excerpt'].encode('utf-8')
+        elif verb == 'MEMBER_COLLECT_ANSWER':  # 收藏了回答
+            self.title = content['target']['question']['title'].encode('utf-8')
             self.contentless = content['target']['excerpt'].encode('utf-8')
         else:  # 未知
             self.title = verb.encode('utf-8')
