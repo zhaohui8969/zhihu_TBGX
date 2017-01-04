@@ -1,0 +1,10 @@
+{
+    "mail_sender": "bfbot8969@163.com", # 发件人地址
+    "login_passwd": "passwd_here",      # 发件人密码
+    "mail_reciver": "natas_hw@163.com", # 收件人地址
+    "smtp_server": "smtp.163.com",      # 发信服务器
+    "user_slugs": [                     # 需要关注的用户
+        "xie-bing-81-95",
+        "zhao-hui-36-5"
+    ]
+}
