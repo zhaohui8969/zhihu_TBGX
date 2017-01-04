@@ -48,10 +48,14 @@ class json_item():
         elif verb == 'MEMBER_VOTEUP_ARTICLE':  # 赞了文章
             self.title = content['target']['title'].encode('utf-8')
             self.contentless = content['target']['excerpt'].encode('utf-8')
+        elif verb == 'QUESTION_CREATE':  # 添加了问题
+            self.title = content['target']['title'].encode('utf-8')
+            self.contentless = ''
         elif verb == 'MEMBER_COLLECT_ANSWER':  # 收藏了回答
             self.title = content['target']['question']['title'].encode('utf-8')
             self.contentless = content['target']['excerpt'].encode('utf-8')
         else:  # 未知
+            logging.info("UNKNOW %s" % verb)
             self.title = verb.encode('utf-8')
             self.contentless = json.dumps(content, indent=4).encode('utf-8')
 
