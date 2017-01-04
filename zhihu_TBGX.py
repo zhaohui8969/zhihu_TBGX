@@ -90,8 +90,8 @@ hash_list = {}
 for user_slug in user_slugs:
     hash_list[user_slug] = [0 for i in range(list_size)]
 while True:
-    try:
-        for user_slug in user_slugs:
+    for user_slug in user_slugs:
+        try:
             notify_msg = []
             json_item_pool = get_activities(user_slug)
             for i in json_item_pool:
@@ -110,7 +110,6 @@ while True:
                 sendemail.sendmail(msg_title, msg_body)
             else:
                 logging.info('%s no update' % user_slug)
-        time.sleep(5 * 60)
-    except Exception as e:
-        print str(e)
-        time.sleep(5 * 60)
+        except Exception as e:
+            print str(e)
+    time.sleep(5 * 60)
