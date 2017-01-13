@@ -1,10 +1,12 @@
 # coding:utf-8
-import requests
-import json
 import hashlib
-import sendemail
-import time
+import json
 import logging
+import time
+
+import requests
+
+import sendemail
 
 with open('conf.json') as fop:
     conf = json.loads(fop.read())
@@ -27,33 +29,42 @@ class json_item():
     def __init__(self, content):
         self.action = content['action_text'].encode('utf-8')
         verb = content['verb']
+        self.url = content['target']['url'].encode('utf-8')
         if verb == 'QUESTION_FOLLOW':  # 关注了问题
             self.title = content['target']['title'].encode('utf-8')
             self.contentless = ''
+
         elif verb == 'ANSWER_VOTE_UP':  # 赞同了回答
             self.title = content['target']['question']['title'].encode('utf-8')
             self.contentless = content['target']['excerpt'].encode('utf-8')
+
         elif verb == 'TOPIC_FOLLOW':  # 关注话题
             self.title = content['target']['name'].encode('utf-8')
             self.contentless = ''
+
         elif verb == 'MEMBER_FOLLOW_COLUMN':  # 关注了专栏
             self.title = content['target']['title'].encode('utf-8')
             self.contentless = content['target']['description'].encode('utf-8')
         elif verb == 'MEMBER_COLLECT_ARTICLE':  # 收藏了文章
             self.title = content['target']['title'].encode('utf-8')
             self.contentless = content['target']['excerpt'].encode('utf-8')
+
         elif verb == 'ANSWER_CREATE':  # 回答了问题
             self.title = content['target']['question']['title'].encode('utf-8')
             self.contentless = content['target']['excerpt'].encode('utf-8')
+
         elif verb == 'MEMBER_VOTEUP_ARTICLE':  # 赞了文章
             self.title = content['target']['title'].encode('utf-8')
             self.contentless = content['target']['excerpt'].encode('utf-8')
+
         elif verb == 'QUESTION_CREATE':  # 添加了问题
             self.title = content['target']['title'].encode('utf-8')
             self.contentless = ''
+
         elif verb == 'MEMBER_COLLECT_ANSWER':  # 收藏了回答
             self.title = content['target']['question']['title'].encode('utf-8')
             self.contentless = content['target']['excerpt'].encode('utf-8')
+
         else:  # 未知
             logging.info("UNKNOW %s" % verb)
             self.title = verb.encode('utf-8')
@@ -62,7 +73,7 @@ class json_item():
         md5(self.action)
         md5(self.title)
         md5(self.contentless)
-        self.md5 = md5("%s%s%s" % (self.action, self.title, self.contentless))
+        self.md5 = md5(self.url)
 
     def little_repr(self):
         return "%s %s" % (self.action, self.title)
